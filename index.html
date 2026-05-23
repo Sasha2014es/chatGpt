@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Clone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="icon-btn" aria-label="Відкрити меню">☰</button>
+        <div class="brand">
+          <span class="brand__logo">▶</span>
+          <span class="brand__name">YouTube</span>
+        </div>
+      </div>
 
+      <div class="topbar__center">
+        <form class="search" id="searchForm">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Пошук"
+            autocomplete="off"
+          />
+          <button type="submit">🔍</button>
+        </form>
+      </div>
+
+      <div class="topbar__right">
+        <button class="icon-btn">🎥</button>
+        <button class="icon-btn">🔔</button>
+        <button class="avatar">U</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="nav-item active" href="#">🏠 Головна</a>
+        <a class="nav-item" href="#">🎵 Shorts</a>
+        <a class="nav-item" href="#">📺 Підписки</a>
+        <hr />
+        <a class="nav-item" href="#">🕘 Історія</a>
+        <a class="nav-item" href="#">📃 Плейлисти</a>
+        <a class="nav-item" href="#">👍 Сподобалось</a>
+      </aside>
+
+      <main class="content">
+        <section class="chips" id="chips"></section>
+        <section class="videos" id="videoGrid"></section>
+      </main>
+    </div>
+
+    <template id="videoCardTemplate">
+      <article class="video-card">
+        <div class="thumb-wrap">
+          <img class="thumb" alt="thumbnail" />
+          <span class="duration"></span>
+        </div>
+        <div class="meta">
+          <img class="channel-avatar" alt="avatar" />
+          <div>
+            <h3 class="title"></h3>
+            <p class="channel"></p>
+            <p class="stats"></p>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
