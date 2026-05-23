@@ -24,12 +24,7 @@
 
       <div class="topbar__center">
         <form class="search" id="searchForm">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Пошук"
-            autocomplete="off"
-          />
+          <input id="searchInput" type="text" placeholder="Пошук" autocomplete="off" />
           <button type="submit">🔍</button>
         </form>
       </div>
@@ -59,7 +54,7 @@
     </div>
 
     <template id="videoCardTemplate">
-      <article class="video-card">
+      <article class="video-card" role="button" tabindex="0">
         <div class="thumb-wrap">
           <img class="thumb" alt="thumbnail" />
           <span class="duration"></span>
@@ -74,6 +69,21 @@
         </div>
       </article>
     </template>
+
+    <div class="player-modal" id="playerModal" aria-hidden="true">
+      <div class="player-modal__backdrop" id="closeModalBackdrop"></div>
+      <div class="player-modal__content" role="dialog" aria-modal="true" aria-label="Відтворення відео">
+        <button class="player-modal__close" id="closeModalBtn" aria-label="Закрити">✕</button>
+        <iframe
+          id="playerFrame"
+          src=""
+          title="Video Player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>

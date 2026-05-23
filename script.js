@@ -9,7 +9,8 @@ const videos = [
     duration: '40:12',
     tag: 'Програмування',
     thumbnail: 'https://picsum.photos/seed/js-course/640/360',
-    avatar: 'https://picsum.photos/seed/code-start/80/80'
+    avatar: 'https://picsum.photos/seed/code-start/80/80',
+    embedUrl: 'https://www.youtube.com/embed/PkZNo7MFNFg'
   },
   {
     title: 'Lofi mix для роботи та навчання',
@@ -19,7 +20,8 @@ const videos = [
     duration: '1:12:08',
     tag: 'Музика',
     thumbnail: 'https://picsum.photos/seed/lofi-video/640/360',
-    avatar: 'https://picsum.photos/seed/chill-beat/80/80'
+    avatar: 'https://picsum.photos/seed/chill-beat/80/80',
+    embedUrl: 'https://www.youtube.com/embed/jfKfPfyJRdk'
   },
   {
     title: 'Що нового у веб-розробці 2026',
@@ -29,7 +31,8 @@ const videos = [
     duration: '16:45',
     tag: 'Веб',
     thumbnail: 'https://picsum.photos/seed/web-2026/640/360',
-    avatar: 'https://picsum.photos/seed/frontend-ua/80/80'
+    avatar: 'https://picsum.photos/seed/frontend-ua/80/80',
+    embedUrl: 'https://www.youtube.com/embed/3JluqTojuME'
   },
   {
     title: 'Найкращі моменти кіберспорту',
@@ -39,7 +42,8 @@ const videos = [
     duration: '10:03',
     tag: 'Ігри',
     thumbnail: 'https://picsum.photos/seed/esport-highlights/640/360',
-    avatar: 'https://picsum.photos/seed/game-portal/80/80'
+    avatar: 'https://picsum.photos/seed/game-portal/80/80',
+    embedUrl: 'https://www.youtube.com/embed/6Dh-RL__uN4'
   },
   {
     title: 'Головні новини дня: коротко',
@@ -49,7 +53,8 @@ const videos = [
     duration: '7:29',
     tag: 'Новини',
     thumbnail: 'https://picsum.photos/seed/news-short/640/360',
-    avatar: 'https://picsum.photos/seed/news24/80/80'
+    avatar: 'https://picsum.photos/seed/news24/80/80',
+    embedUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
   },
   {
     title: 'Подкаст: як стартувати в IT',
@@ -59,7 +64,8 @@ const videos = [
     duration: '52:10',
     tag: 'Подкасти',
     thumbnail: 'https://picsum.photos/seed/it-podcast/640/360',
-    avatar: 'https://picsum.photos/seed/ua-tech-talks/80/80'
+    avatar: 'https://picsum.photos/seed/ua-tech-talks/80/80',
+    embedUrl: 'https://www.youtube.com/embed/hJP5GqnTrNo'
   }
 ];
 
@@ -68,9 +74,25 @@ const videoGrid = document.getElementById('videoGrid');
 const videoTemplate = document.getElementById('videoCardTemplate');
 const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('searchInput');
+const playerModal = document.getElementById('playerModal');
+const playerFrame = document.getElementById('playerFrame');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const closeModalBackdrop = document.getElementById('closeModalBackdrop');
 
 let activeTag = 'Усі';
 let searchQuery = '';
+
+function openVideo(embedUrl) {
+  playerFrame.src = `${embedUrl}?autoplay=1`;
+  playerModal.classList.add('open');
+  playerModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeVideo() {
+  playerModal.classList.remove('open');
+  playerModal.setAttribute('aria-hidden', 'true');
+  playerFrame.src = '';
+}
 
 function renderTags() {
   chipsRoot.innerHTML = '';
@@ -111,6 +133,7 @@ function renderVideos() {
 
   filtered.forEach((video) => {
     const card = videoTemplate.content.cloneNode(true);
+    const videoCard = card.querySelector('.video-card');
 
     card.querySelector('.thumb').src = video.thumbnail;
     card.querySelector('.duration').textContent = video.duration;
@@ -118,6 +141,14 @@ function renderVideos() {
     card.querySelector('.title').textContent = video.title;
     card.querySelector('.channel').textContent = video.channel;
     card.querySelector('.stats').textContent = `${video.views} • ${video.age}`;
+
+    videoCard.addEventListener('click', () => openVideo(video.embedUrl));
+    videoCard.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openVideo(video.embedUrl);
+      }
+    });
 
     videoGrid.appendChild(card);
   });
@@ -127,6 +158,14 @@ searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
   searchQuery = searchInput.value;
   renderVideos();
+});
+
+closeModalBtn.addEventListener('click', closeVideo);
+closeModalBackdrop.addEventListener('click', closeVideo);
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && playerModal.classList.contains('open')) {
+    closeVideo();
+  }
 });
 
 renderTags();
